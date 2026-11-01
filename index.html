@@ -319,6 +319,8 @@ const QUIZ = [
    opts:[["安稳，护住身边的人，让人依靠","tabby"],["总想出有趣的点子拉着人一起实现","golden"],["小厨娘上线，经营生活小能手","siamese"]]}
 ];
 
+const API_KEY = "sk_live_f32474d2329f840bc182c13d3dcca4a05ac07e628f02284a";
+
 const anims = {};
 function mountCat(id){
   const el=document.getElementById(id);
@@ -329,8 +331,8 @@ function mountCat(id){
 }
 mountCat("coverCat");
 try{
-  fetch("count.json?v="+Date.now()).then(r=>r.json()).then(j=>{
-    if(j&&j.completed&&j.completed.total) document.getElementById("coverCount").textContent="已测试人数："+j.completed.total;
+  fetch("https://v1.apizero.cn/api/visits-counter?site=exoticflicker-cati&name=completed&mode=total&no_increment=1&format=json&api_key="+API_KEY).then(r=>r.json()).then(j=>{
+    if(j&&j.data&&j.data.record&&j.data.record.total) document.getElementById("coverCount").textContent="已测试人数："+j.data.record.total;
   }).catch(()=>{});
 }catch(e){}
 
@@ -405,8 +407,8 @@ function showResult(){
   mountCat("resCat");
   show("result");
   try{ _hmt.push(['_trackEvent','test','completed',b.n]); }catch(e){}
-  try{ fetch("https://v1.apizero.cn/api/visits-counter?site=exoticflicker-cati&name=completed&mode=total").catch(()=>{}); }catch(e){}
-  topCats.forEach(k=>{ try{ fetch("https://v1.apizero.cn/api/visits-counter?site=exoticflicker-cati&name="+k+"&mode=total").catch(()=>{}); }catch(e){} });
+  try{ fetch("https://v1.apizero.cn/api/visits-counter?site=exoticflicker-cati&name=completed&mode=total&api_key="+API_KEY).catch(()=>{}); }catch(e){}
+  topCats.forEach(k=>{ try{ fetch("https://v1.apizero.cn/api/visits-counter?site=exoticflicker-cati&name="+k+"&mode=total&api_key="+API_KEY).catch(()=>{}); }catch(e){} });
   document.getElementById("resCount").textContent=b.n+"小猫大军+1(/▽＼)";
 }
 
@@ -444,7 +446,7 @@ function renderVote(){
     b.onclick=()=>{
       if(voted){ alert("你已经投过啦，谢谢支持！"); return; }
       localStorage.setItem("cati_voted","1");
-      try{ fetch("https://v1.apizero.cn/api/visits-counter?site=exoticflicker-cati&name="+name+"&mode=total").catch(()=>{}); }catch(e){}
+      try{ fetch("https://v1.apizero.cn/api/visits-counter?site=exoticflicker-cati&name="+name+"&mode=total&api_key="+API_KEY).catch(()=>{}); }catch(e){}
       b.innerHTML=`<span>${label} ✅ 已投</span>`;
       b.style.borderColor="var(--accent)";
       list.querySelectorAll(".vote-item").forEach(o=>o.style.pointerEvents="none");
