@@ -42,7 +42,8 @@ async function fetchOne(name){
     }
   }
   const html = fs.readFileSync('count.html', 'utf8');
-  const out = html.replace('__DATA__', JSON.stringify(data));
+  const out = html.replace(/const DATA = \{.*?\};/, 'const DATA = ' + JSON.stringify(data) + ';');
   fs.writeFileSync('count.html', out);
+  fs.writeFileSync('count.json', JSON.stringify(data));
   console.log('updated, completed =', data.completed.total, ', 黑猫 =', data.black.total);
 })();

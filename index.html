@@ -329,8 +329,8 @@ function mountCat(id){
 }
 mountCat("coverCat");
 try{
-  fetch("https://v1.apizero.cn/api/visits-counter?site=exoticflicker-cati&name=completed&mode=total&no_increment=1&format=json").then(r=>r.json()).then(j=>{
-    if(j.data&&j.data.record) document.getElementById("coverCount").textContent="已测试人数："+j.data.record.total;
+  fetch("count.json?v="+Date.now()).then(r=>r.json()).then(j=>{
+    if(j&&j.completed&&j.completed.total) document.getElementById("coverCount").textContent="已测试人数："+j.completed.total;
   }).catch(()=>{});
 }catch(e){}
 
